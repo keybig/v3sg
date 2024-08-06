@@ -1,0 +1,398 @@
+{
+  "address": "0xA28719DDDa6e129d5E8fd470A17Cd075cEf5d25A",
+  "abi": [
+    {
+      "type": "constructor",
+      "inputs": [
+        {
+          "name": "rewardManager_",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "poolId_",
+          "type": "uint128",
+          "internalType": "uint128"
+        },
+        {
+          "name": "collateralType_",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "payoutToken_",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "payoutTokenDecimals_",
+          "type": "uint8",
+          "internalType": "uint8"
+        },
+        {
+          "name": "name_",
+          "type": "string",
+          "internalType": "string"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "SYSTEM_PRECISION",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "collateralType",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "distributeRewards",
+      "inputs": [
+        {
+          "name": "poolId_",
+          "type": "uint128",
+          "internalType": "uint128"
+        },
+        {
+          "name": "collateralType_",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "amount_",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "start_",
+          "type": "uint64",
+          "internalType": "uint64"
+        },
+        {
+          "name": "duration_",
+          "type": "uint32",
+          "internalType": "uint32"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "name",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "string",
+          "internalType": "string"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "onPositionUpdated",
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint128",
+          "internalType": "uint128"
+        },
+        {
+          "name": "",
+          "type": "uint128",
+          "internalType": "uint128"
+        },
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "payout",
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint128",
+          "internalType": "uint128"
+        },
+        {
+          "name": "poolId_",
+          "type": "uint128",
+          "internalType": "uint128"
+        },
+        {
+          "name": "collateralType_",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "payoutTarget_",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "payoutAmount_",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "payoutToken",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "poolId",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint128",
+          "internalType": "uint128"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "precision",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "rewardManager",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "rewardsAmount",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "setShouldFailPayout",
+      "inputs": [
+        {
+          "name": "shouldFailPayout_",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "shouldFailPayout",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "supportsInterface",
+      "inputs": [
+        {
+          "name": "interfaceId",
+          "type": "bytes4",
+          "internalType": "bytes4"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "token",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "error",
+      "name": "FailedTransfer",
+      "inputs": [
+        {
+          "name": "from",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "to",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "value",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidParameter",
+      "inputs": [
+        {
+          "name": "parameter",
+          "type": "string",
+          "internalType": "string"
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "internalType": "string"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "NotEnoughBalance",
+      "inputs": [
+        {
+          "name": "amountRequested",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "currentBalance",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "NotEnoughRewardsLeft",
+      "inputs": [
+        {
+          "name": "amountRequested",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "amountLeft",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "name": "addr",
+          "type": "address",
+          "internalType": "address"
+        }
+      ]
+    }
+  ],
+  "constructorArgs": [
+    "0x764F4C95FDA0D6f8114faC54f6709b1B45f919a1",
+    "1",
+    "0x8069c44244e72443722cfb22DcE5492cba239d39",
+    "0xc43708f8987Df3f3681801e5e640667D86Ce3C30",
+    "6",
+    "Spartan Council Pool USDC Rewards"
+  ],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x50b6affe4dcea0ca0a501beedc458e52099620d06d947b0d3ddb4804d9796f5d",
+  "sourceName": "src/RewardsDistributor.sol",
+  "contractName": "RewardsDistributor",
+  "deployedOn": "contract.RewardsDistributor",
+  "gasUsed": 968220,
+  "gasCost": "1000294"
+}
