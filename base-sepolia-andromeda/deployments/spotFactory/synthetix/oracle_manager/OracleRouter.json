@@ -1,5 +1,5 @@
 {
-  "address": "0xef64d80440c839890151ac86a58a34f0724dd318",
+  "address": "0x0e93b7a92222bb66fbeeaeae8cae65147c1d48b4",
   "abi": [
     {
       "inputs": [
@@ -588,11 +588,11 @@
     }
   ],
   "deployedOn": "router.OracleRouter",
-  "deployTxnHash": "0x3bbd7c85628ce8d70bd30f5aacee776c8d25805e36defa42eff2438a6b63f2dc",
-  "deployTxnBlockNumber": "13287503",
-  "deployTimestamp": "1722343294",
+  "deployTxnHash": "0x74ca19674265588a9f33b268f72a07a9397c5fd56fdf968aa2d84b76a56f3b54",
+  "deployTxnBlockNumber": "13596881",
+  "deployTimestamp": "1722962050",
   "contractName": "OracleRouter",
   "sourceName": "OracleRouter.sol",
   "gasUsed": 246006,
-  "gasCost": "11084299"
+  "gasCost": "10550404"
 }

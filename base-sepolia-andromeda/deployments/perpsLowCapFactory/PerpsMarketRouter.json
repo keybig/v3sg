@@ -1,5 +1,5 @@
 {
-  "address": "0xf9662573501746343f28b5e724e8b88d75a57a87",
+  "address": "0x5afddaa40baebec69566f750c912cff63ddf3652",
   "abi": [
     {
       "inputs": [
@@ -4690,9 +4690,9 @@
     }
   ],
   "deployedOn": "router.PerpsMarketRouter",
-  "deployTxnHash": "0x7f5c785a7c679cb9a508eb4047e96ca1b53032162663b09743fc0e53aa3753d6",
+  "deployTxnHash": "0xfbaafca493909ddc49bb4e14fa6dc6311fd2c2fa92aeb6a8118f87eb4b85d2a6",
   "contractName": "PerpsMarketRouter",
   "sourceName": "PerpsMarketRouter.sol",
-  "gasUsed": 1200150,
-  "gasCost": "1000387"
+  "gasUsed": 1200358,
+  "gasCost": "1000319"
 }

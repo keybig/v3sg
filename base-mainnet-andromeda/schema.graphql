@@ -1,7 +1,8 @@
 type Account @entity {
   id: ID!
   accountId: BigInt!
-  owner: String!
+  owner: Bytes!
+  orders: [Order!] @derivedFrom(field: "account")
 }
 
 type Market @entity {
@@ -15,6 +16,7 @@ type Market @entity {
   sizeDelta: BigInt
   currentFundingRate: BigInt
   currentFundingVelocity: BigInt
+  interestRate: BigInt
   feedId: Bytes
   maxFundingVelocity: BigInt
   skewScale: BigInt
@@ -29,14 +31,25 @@ type Market @entity {
   maxLiquidationLimitAccumulationMultiplier: BigInt
   makerFee: BigInt
   takerFee: BigInt
-
   factoryInitialized: Boolean
+  #new
+  orders: [Order!] @derivedFrom(field: "market")
 }
 
-type Order @entity {
+enum OrderState {
+  SETTLED
+  COMMITTED
+  CANCELLED
+  EXPIRED
+}
+
+type Order @entity { #trades
   id: ID!
+  market: Market! #new
+  account: Account! #new
   marketId: BigInt
   accountId: BigInt
+  accountAddress:Bytes
   amountProvided: BigInt
   orderType: Int
   size: BigInt
@@ -45,17 +58,57 @@ type Order @entity {
   expirationTime: BigInt
   trackingCode: Bytes
   owner: String
-
+  orderState: OrderState
   fillPrice: BigInt
   accountPnlRealized: BigInt
   newSize: BigInt
   collectedFees: BigInt
   settlementReward: BigInt
   settler: String
-
+  position: Position # position entity
   block: BigInt!
   timestamp: BigInt!
+  transactionHash: Bytes
 }
+
+type Position @entity { #trades
+  id: ID!
+  trades: [OrderSettled!] @derivedFrom(field: "position")
+  totalTrades: BigInt!
+  openTimestamp: BigInt!
+  closeTimestamp: BigInt
+  entryPrice: BigInt!
+  exitPrice: BigInt
+  averageEntryPrice: BigInt!
+  isOpen: Boolean!
+  isLiquidated: Boolean
+  market: Market!
+  account: Account!
+  size: BigInt!
+  realizedPnl: BigInt!
+  totalFees: BigInt!
+  trackingCode: Bytes
+  accruedFunding: BigInt!
+  pnlWithFeesPaid: BigInt
+}
+
+type OpenPosition @entity {
+  id: ID!
+  position: Position
+}
+
+type AccountStat @entity {
+  id: ID!
+  accountId: BigInt!
+  accountOwner: Bytes!
+  feesPaid: BigInt!
+  pnl: BigInt!
+  pnlWithFeesPaid: BigInt!
+  liquidations: BigInt!
+  totalTrades: BigInt!
+  totalVolume: BigInt!
+}
+
 
 type SettlementStrategy @entity {
   id: ID!
@@ -84,6 +137,8 @@ type GlobalConfiguration @entity {
   feeCollector: String
 }
 
+# Positions Entity, Liquidations Entity. Use Raw events to build objects
+
 # raw events
 type AccountLiquidated @entity {
   id: ID!
@@ -100,6 +155,7 @@ type PositionLiquidated @entity {
   marketId: BigInt!
   amountLiquidated: BigInt!
   currentPositionSize: BigInt!
+  transactionHash: Bytes!
 }
 
 type CollateralModified @entity {
@@ -109,6 +165,7 @@ type CollateralModified @entity {
   synthMarketId: BigInt!
   amount: BigInt!
   sender: Bytes!
+  transactionHash: Bytes!
 }
 
 type OrderCommitted @entity {
@@ -123,6 +180,7 @@ type OrderCommitted @entity {
   expirationTime: BigInt!
   trackingCode: Bytes!
   sender: Bytes!
+  transactionHash: Bytes!
 }
 
 type OrderSettled @entity {
@@ -130,6 +188,8 @@ type OrderSettled @entity {
   timestamp: BigInt!
   marketId: BigInt!
   accountId: BigInt!
+  account: Account!
+  market: Market!
   fillPrice: BigInt!
   accruedFunding: BigInt!
   sizeDelta: BigInt!
@@ -140,6 +200,10 @@ type OrderSettled @entity {
   settlementReward: BigInt!
   trackingCode: Bytes!
   settler: Bytes!
+  transactionHash: Bytes!
+  orderCommitted: OrderCommitted
+  interestCharged: BigInt
+  position: Position
 }
 
 type PreviousOrderExpired @entity {
@@ -149,9 +213,24 @@ type PreviousOrderExpired @entity {
   accountId: BigInt!
   sizeDelta: BigInt!
   acceptablePrice: BigInt!
-  settlementTime: BigInt!
+  settlementTime: BigInt
   trackingCode: Bytes!
 }
+
+type OrderCancelled @entity {
+  id: ID! # Unique identifier for the order cancellation event
+  marketId: BigInt! # ID of the market where the order was cancelled
+  accountId: BigInt! # ID of the account that cancelled the order
+  desiredPrice: BigInt! # The price at which the order was cancelled
+  fillPrice: BigInt! # The actual price at which the order was cancelled
+  sizeDelta: BigInt! # Size delta from the order
+  settlementReward: BigInt! # Fees collected by the settler
+  trackingCode: Bytes! # Optional tracking code for integrator purposes
+  settler: Bytes! # Address of the settler of the order
+  timestamp: BigInt! # The block timestamp when the event occurred
+  txnHash: Bytes! # The transaction hash for the event
+}
+
 
 type MarketUpdated @entity {
   id: ID!
@@ -163,4 +242,13 @@ type MarketUpdated @entity {
   sizeDelta: BigInt!
   currentFundingRate: BigInt!
   currentFundingVelocity: BigInt!
+}
+
+type InterestCharged @entity {
+  id: ID!
+  timestamp: BigInt!
+  block: BigInt!
+  accountId: BigInt!
+  interest: BigInt!
+  txHash: Bytes!
 }

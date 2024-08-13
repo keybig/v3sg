@@ -1,5 +1,5 @@
 {
-  "address": "0xA43c3085a929c5a49B3e78bb72BECeED577aDAf5",
+  "address": "0x0407307268942Ab7150E989e5b1C0Fcf73ebeEbD",
   "abi": [
     {
       "inputs": [
@@ -999,10 +999,10 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x8964911eaa2977991b5552b90279421b72ed0b533dfec1ec04b880afde9ded79",
+  "deployTxnHash": "0xb18a39962a88564586439fc55f440121009eeef954e6b44d74446fa65b6eee14",
   "sourceName": "contracts/modules/MarketConfigurationModule.sol",
   "contractName": "MarketConfigurationModule",
   "deployedOn": "contract.MarketConfigurationModule",
   "gasUsed": 1064187,
-  "gasCost": "1000394"
+  "gasCost": "1000320"
 }
