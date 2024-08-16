@@ -1,0 +1,46 @@
+{
+    "TopLevelEntities": [
+        {
+            "Account": "User Accounts.",
+            "Relationships": [
+                "Positions"
+            ]
+        },
+        {
+            "Markets": "Active Markets. Include Stats in Market.",
+            "Relationships": [
+                "Positions"
+            ]
+        },
+        {
+            "Positions": "Positions",
+            "Relationships": [
+                "Trades",
+                "Account",
+                "Market",
+                "Liquidations"
+            ]
+        },
+        {
+            "Trades": "Trades",
+            "Relationships": [
+                "OrderCommitted, OrderSettled, OrderCancelled, OrderExpired"
+            ]
+        },
+        {
+            "Liquidations": "Positions Liquidated",
+            "Relationships": [
+                "Positions",
+                "Account",
+                "Market"
+            ]
+        }
+    ],
+    "SimpleEntities": [
+        "Account",
+        "Markets",
+        "Positions",
+        "Trades",
+        "Liquidations"
+    ]
+}

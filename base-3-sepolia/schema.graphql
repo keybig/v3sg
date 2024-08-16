@@ -1,0 +1,236 @@
+type Account @entity {
+  id: ID!
+  accountId: BigInt!
+  owner: Bytes!
+  feesPaid: BigInt!
+  pnl: BigInt!
+  totalLiquidations: BigInt!
+  totalTrades: BigInt!
+  totalVolume: BigInt!
+  positions: [Position!] @derivedFrom(field: "account")
+  liquidations: [Liquidation!] @derivedFrom(field: "account")
+}
+
+type Market @entity {
+  id: ID!
+  perpsMarketId: BigInt!
+  marketName: String!
+  marketSymbol: String!
+  price: BigInt!
+  skew: BigInt
+  size: BigInt
+  sizeDelta: BigInt
+  currentFundingRate: BigInt
+  currentFundingVelocity: BigInt
+  interestRate: BigInt
+  feedId: Bytes
+  maxFundingVelocity: BigInt
+  skewScale: BigInt
+  lockedOiPercent: BigInt
+  initialMarginRatioD18: BigInt
+  minimumInitialMarginRatioD18: BigInt
+  maintenanceMarginRatioD18: BigInt
+  liquidationRewardRatioD18: BigInt
+  flagRewardRatioD18: BigInt
+  minimumPositionMargin: BigInt
+  maxSecondsInLiquidationWindow: BigInt
+  maxLiquidationLimitAccumulationMultiplier: BigInt
+  makerFee: BigInt
+  takerFee: BigInt
+  positions: [Position!] @derivedFrom(field: "market")
+  liquidations: [Liquidation!] @derivedFrom(field: "market")
+}
+
+
+
+type Trade @entity {
+  id: ID!
+  position: Position!
+  account: Account!
+  market: Market!
+  fillPrice: BigInt!
+  pnl: BigInt!
+  accruedFunding: BigInt!
+  sizeDelta: BigInt!
+  newSize: BigInt!
+  volume: BigInt!
+  notionalAmount: BigInt!
+  totalFees: BigInt!
+  referralFees: BigInt!
+  collectedFees: BigInt!
+  settlementReward: BigInt
+  trackingCode: Bytes
+  settler: Bytes!
+  block: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+  interestCharged: BigInt
+}
+
+enum PositionStatus {
+  OPEN
+  CLOSED
+  LIQUIDATED
+}
+
+enum Direction {
+  LONG
+  SHORT
+}
+
+type Position @entity {
+  id: ID!
+  market: Market! 
+  account: Account!
+  trackingCode: Bytes
+  isOpen: Boolean!
+  isLiquidated: Boolean!
+  status: PositionStatus!
+  direction: Direction!
+  openTimestamp: BigInt!
+  closeTimestamp: BigInt
+  entryPrice: BigInt!
+  exitPrice: BigInt
+  lastFillPrice: BigInt!
+  size: BigInt!
+  notionalAmount: BigInt!
+  realizedPnl: BigInt!
+  totalFees: BigInt!
+  totalVolume: BigInt!
+  totalTrades: BigInt!
+  accruedFunding: BigInt!
+  interestCharged: BigInt!
+  trades: [Trade!] @derivedFrom(field: "position")
+  liquidation: Liquidation
+}
+
+type OpenPosition @entity {
+  id: ID!
+  position: Position!
+}
+
+enum LiquidationType {
+  PARTIAL
+  FULL
+}
+
+type Liquidation @entity {
+  id: ID!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+  account: Account!
+  accountId: BigInt!
+  market: Market!
+  marketId: BigInt!
+  amountLiquidated: BigInt!
+  liquidationType: LiquidationType!
+  currentPositionSize: BigInt!
+  notionalAmount: BigInt!
+  marketPrice: BigInt!
+  position: Position @derivedFrom(field: "liquidation")
+}
+
+type AccountStat @entity {
+  id: ID!
+  accountId: BigInt!
+  accountOwner: Bytes!
+  pnl: BigInt!
+  liquidations: BigInt!
+  totalTrades: BigInt!
+  totalVolume: BigInt!
+  timestamp: BigInt!
+  block: BigInt!
+}
+
+
+type SettlementStrategy @entity {
+  id: ID!
+  strategyId: BigInt!
+  marketId: BigInt!
+  enabled: Boolean
+  strategyType: Int
+  settlementDelay: BigInt
+  settlementWindowDuration: BigInt
+  priceVerificationContract: String
+  feedId: Bytes
+  settlementReward: BigInt
+  minimumUsdExchangeAmount: BigInt
+  maxRoundingLoss: BigInt
+  commitmentPriceDelay: BigInt
+}
+
+type ReferrerShare @entity {
+  id: ID!
+  referrer: String
+  shareRatioD18: BigInt
+}
+
+type GlobalConfiguration @entity {
+  id: ID!
+  feeCollector: String
+}
+
+# Positions Entity, Liquidations Entity. Use Raw events to build objects
+
+# raw events
+type AccountLiquidated @entity {
+  id: ID!
+  timestamp: BigInt!
+  accountId: BigInt!
+  liquidationReward: BigInt!
+  fullyLiquidated: Boolean!
+}
+
+type PositionLiquidated @entity {
+  id: ID!
+  timestamp: BigInt!
+  accountId: BigInt!
+  marketId: BigInt!
+  amountLiquidated: BigInt!
+  currentPositionSize: BigInt!
+  transactionHash: Bytes!
+}
+
+type CollateralModified @entity {
+  id: ID!
+  timestamp: BigInt!
+  accountId: BigInt!
+  synthMarketId: BigInt!
+  amount: BigInt!
+  sender: Bytes!
+  transactionHash: Bytes!
+}
+
+type MarketUpdated @entity {
+  id: ID!
+  timestamp: BigInt!
+  marketId: BigInt!
+  price: BigInt!
+  skew: BigInt!
+  size: BigInt!
+  sizeDelta: BigInt!
+  currentFundingRate: BigInt!
+  currentFundingVelocity: BigInt!
+}
+
+type InterestCharged @entity {
+  id: ID!
+  timestamp: BigInt!
+  block: BigInt!
+  accountId: BigInt!
+  interest: BigInt!
+  txHash: Bytes!
+}
+
+type AccountFlaggedForLiquidation @entity {
+  id: ID!
+  account: Account!
+  accountId: BigInt!
+  availableMargin: BigInt!
+  requiredMaintenanceMargin: BigInt!
+  liquidationReward: BigInt!
+  flagReward: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+

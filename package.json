@@ -11,6 +11,8 @@
         "alchemy:base-sepolia-andromeda": "graph deploy perps-market-base-sepolia-andromeda subgraph.base-sepolia-andromeda.yaml --output-dir ./build/base-sepolia-andromeda --version-label v1 --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key $SATSUMA_KEY --ipfs https://ipfs.satsuma.xyz",
         "alchemy:base-mainnet-andromeda": "graph deploy perps-market-base-mainnet-andromeda subgraph.base-mainnet-andromeda.yaml --output-dir ./build/base-mainnet-andromeda --version-label v1 --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key $SATSUMA_KEY --ipfs https://ipfs.satsuma.xyz",
         "alchemy:base-v2": "graph deploy perps-market-base-2 subgraph.base-mainnet-andromeda.yaml --output-dir ./build/base-mainnet-andromeda --version-label v1 --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key $SATSUMA_KEY --ipfs https://ipfs.satsuma.xyz",
+        "alchemy:base-3": "graph deploy perps-base-3 subgraph.base-3.yaml --output-dir ./build/base3 --version-label v2 --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key $SATSUMA_KEY --ipfs https://ipfs.satsuma.xyz",
+        "alchemy:base-3-sepolia": "graph deploy base-3-sepolia subgraph.base-3-sepolia.yaml --output-dir ./build/base3-sepolia --version-label v1 --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key $SATSUMA_KEY --ipfs https://ipfs.satsuma.xyz",
         "test": "graph test",
         "coverage": "npm run deployments:optimism-goerli && npm run codegen:optimism-goerli && git diff --exit-code && npm test --coverage",
         "create-local": "graph create --node http://localhost:8020/ snx-v3/v3-perps-opt-goerli",

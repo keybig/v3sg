@@ -46,8 +46,6 @@ export function handleOrderSettled(event: OrderSettledEvent): void {
     orderSettled.interestCharged = interestChargedItem.interest;
   }
 
-
-
   // Load the OpenPosition entity using the accountId and marketId
   const openPositionId = event.params.marketId.toString() + '-' + event.params.accountId.toString();
 
