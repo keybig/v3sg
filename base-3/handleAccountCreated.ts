@@ -15,6 +15,8 @@ export function handleAccountCreated(event: AccountCreated): void {
   account.totalLiquidations = BigInt.zero();
   account.totalTrades = BigInt.zero();
   account.totalVolume = BigInt.zero();
+  account.totalOpenPositions = BigInt.zero();
+  account.totalClosedPositions = BigInt.zero();
   account.save();
 }
 

@@ -7,6 +7,8 @@ type Account @entity {
   totalLiquidations: BigInt!
   totalTrades: BigInt!
   totalVolume: BigInt!
+  totalOpenPositions: BigInt!
+  totalClosedPositions: BigInt!
   positions: [Position!] @derivedFrom(field: "account")
   liquidations: [Liquidation!] @derivedFrom(field: "account")
 }
@@ -89,6 +91,7 @@ type Position @entity {
   direction: Direction!
   openTimestamp: BigInt!
   closeTimestamp: BigInt
+  lastTradeTimestamp: BigInt!
   entryPrice: BigInt!
   exitPrice: BigInt
   lastFillPrice: BigInt!
@@ -102,6 +105,8 @@ type Position @entity {
   interestCharged: BigInt!
   trades: [Trade!] @derivedFrom(field: "position")
   liquidation: Liquidation
+  averageEntryPrice: BigInt!
+  unrealizedPnl: BigInt!
 }
 
 type OpenPosition @entity {
@@ -130,14 +135,15 @@ type Liquidation @entity {
   position: Position @derivedFrom(field: "liquidation")
 }
 
-type AccountStat @entity {
+type AccountAggregateStat @entity {
   id: ID!
-  accountId: BigInt!
-  accountOwner: Bytes!
+  account: Account!
+  market: Market!
   pnl: BigInt!
   liquidations: BigInt!
   totalTrades: BigInt!
   totalVolume: BigInt!
+  totalDailyPnl: BigInt!
   timestamp: BigInt!
   block: BigInt!
 }

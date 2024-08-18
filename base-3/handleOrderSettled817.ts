@@ -187,7 +187,7 @@ export function handleOrderSettled(event: OrderSettledEvent): void {
       // Update Total Open and Closed Positions
       account.totalOpenPositions = account.totalOpenPositions.minus(BigInt.fromI32(1));
       account.totalClosedPositions = account.totalClosedPositions.plus(BigInt.fromI32(1));
-
+      
     } else if (event.params.newSize.gt(BigInt.zero())) {
       // Update Long Position
       positionEntity.direction = "LONG";

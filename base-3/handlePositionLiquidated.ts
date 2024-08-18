@@ -51,9 +51,13 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     position.liquidation = liquidation.id;
     position.isOpen = false;
     position.status = "LIQUIDATED";
+    position.size = event.params.currentPositionSize;
+    position.closeTimestamp = event.block.timestamp;
+    position.exitPrice = market.price; // assign price at time of liquidation to exit price
     position.save();
     store.remove('OpenPosition', openPosition.id);
     account.totalLiquidations = account.totalLiquidations.plus(BigInt.fromI32(1));
+    account.totalOpenPositions = account.totalOpenPositions.minus(BigInt.fromI32(1));
     account.save()
   }
 

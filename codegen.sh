@@ -37,7 +37,7 @@ releaseVersion="latest"
 #codegen base-mainnet-andromeda 8453 "synthetix-omnibus:$releaseVersion" andromeda
 
 codegen base-3 8453 "synthetix-omnibus:$releaseVersion" andromeda
-codegen base-3-sepolia 84532 "synthetix-omnibus:$releaseVersion" andromeda
+# codegen base-3-sepolia 84532 "synthetix-omnibus:$releaseVersion" andromeda
 
 #codegen mainnet 1 "synthetix-omnibus:$releaseVersion" main
 #codegen goerli 5 "synthetix-omnibus:$releaseVersion" main
