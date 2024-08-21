@@ -88,8 +88,6 @@ export function handleOrderSettled(event: OrderSettledEvent): void {
     openPositionEntity.position = tradeId;
   }
 
-  
-
   // load position entity
   let positionEntity = Position.load(openPositionEntity.position);
 
@@ -98,9 +96,6 @@ export function handleOrderSettled(event: OrderSettledEvent): void {
     // If no open position, create a new Position entity
     positionEntity = new Position(tradeId);
 
-    // set the trade type
-    trade.tradeType = event.params.sizeDelta.gt(BigInt.zero()) ? "LONG_OPENED" : "SHORT_OPENED"
-   
     // Increment Total Open Positions
     account.totalOpenPositions = account.totalOpenPositions.plus(BigInt.fromI32(1));
 
@@ -115,8 +110,7 @@ export function handleOrderSettled(event: OrderSettledEvent): void {
       ? "LONG"
       : "SHORT";
 
-    // openTimestamp, lastTradetimestamp, entryPrice, lastFillPrice, 
-    // averageEntryPrice, size, notionalAmount, realizedPnl, unrealizedPnl
+    // openTimestamp, lastTradetimestamp, entryPrice, lastFillPrice, averageEntryPrice, size, notionalAmount, realizedPnl, unrealizedPnl
     positionEntity.openTimestamp = event.block.timestamp;
     positionEntity.lastTradeTimestamp = trade.timestamp;
     positionEntity.entryPrice = event.params.fillPrice;
@@ -151,7 +145,6 @@ export function handleOrderSettled(event: OrderSettledEvent): void {
     trade.save();
   } else {
     // Position Entity is not null. Process Order updating Position
-    
 
     // store previousPositionSize
     const previousPositionValue = positionEntity.size
@@ -180,10 +173,7 @@ export function handleOrderSettled(event: OrderSettledEvent): void {
     if (event.params.newSize.isZero()) {
       // If the newSize is zero, this means the position is being closed
 
-      // set trade type to closing
-      trade.tradeType = event.params.sizeDelta.gt(BigInt.zero()) ? "SHORT_CLOSED" : "LONG_CLOSED";
-
-      // isOpen, status, closeTimestamp, exitPrice, unrealizedPnl, realizedPnl
+      // isOpen, status, closeTimestamp, exitPrice, unrealizedPnl
       positionEntity.isOpen = false;
       positionEntity.status = "CLOSED";
       positionEntity.closeTimestamp = event.block.timestamp;
@@ -201,9 +191,6 @@ export function handleOrderSettled(event: OrderSettledEvent): void {
     } else if (event.params.newSize.gt(BigInt.zero())) {
       // Update Long Position
       positionEntity.direction = "LONG";
-
-      // update trade type
-      trade.tradeType = event.params.sizeDelta.gt(BigInt.zero()) ? "LONG_INCREASED" : "LONG_DECREASED";
 
       // Calculate unrealizedPnl for Long Position
       positionEntity.unrealizedPnl = market.price
@@ -223,9 +210,6 @@ export function handleOrderSettled(event: OrderSettledEvent): void {
     } else if (event.params.newSize.lt(BigInt.zero())) {
       // Update Short Position
       positionEntity.direction = "SHORT";
-
-      // update trade type
-      trade.tradeType = event.params.sizeDelta.gt(BigInt.zero()) ? "SHORT_DECREASED" : "SHORT_INCREASED";
 
       // Calculate unrealizedPnl for Short Position
       positionEntity.unrealizedPnl = positionEntity.averageEntryPrice
@@ -261,18 +245,17 @@ export function handleOrderSettled(event: OrderSettledEvent): void {
   account.totalVolume = account.totalVolume.plus(volume);
   account.save();
 
-  const accountStatId = account.id.toString() + '-' + positionEntity.id.toString();
-  let accountStatEntity = AccountAggregateStat.load(accountStatId);
-  if(accountStatEntity == null) {
-    accountStatEntity = new AccountAggregateStat(accountStatId)
-  }
-  accountStatEntity.account = account.id;
-  accountStatEntity.market = market.id;
-  accountStatEntity.positionPnl = event.params.pnl;
-  accountStatEntity.accountPnl = account.pnl;
-  accountStatEntity.timestamp = event.block.timestamp;
-  accountStatEntity.block = event.block.number;
-  accountStatEntity.save()
+  // Update Account Aggregate Stats
+  const accountStatsId = account.id.toString() + '-' + event.block.timestamp.toString();
+  const accountStatsEntity = new AccountAggregateStat(accountStatsId);
+  accountStatsEntity.account = account.id;
+  accountStatsEntity.market = market.id;
+  accountStatsEntity.position = positionEntity.id;
+  accountStatsEntity.trade = trade.id;
+  accountStatsEntity.eventPnl = event.params.pnl;
+  accountStatsEntity.accountPnl = account.pnl;
+  accountStatsEntity.timestamp = event.block.timestamp;
+  accountStatsEntity.block = event.block.number;
+  accountStatsEntity.save();
+
 }
-
-
