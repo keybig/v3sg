@@ -165,7 +165,7 @@ export function handleOrderSettled(event: OrderSettledEvent): void {
     // size, notionalAmount, realizedPnl
     positionEntity.size = event.params.newSize;
     positionEntity.notionalAmount = notionalAmount;
-    // positionEntity.realizedPnl = event.params.pnl; ## already assigned before if/else block
+    positionEntity.realizedPnl = event.params.pnl;
 
     // totalFees, totalVolume, totalTrades, accruedFunding
     positionEntity.totalFees = event.params.totalFees;
@@ -189,7 +189,7 @@ export function handleOrderSettled(event: OrderSettledEvent): void {
       positionEntity.closeTimestamp = event.block.timestamp;
       positionEntity.exitPrice = event.params.fillPrice;
       positionEntity.unrealizedPnl = BigInt.zero();
-      positionEntity.realizedPnl = event.params.pnl;
+      // positionEntity.realizedPnl = event.params.pnl;
 
       // Remove the OpenPosition entity
       store.remove("OpenPosition", openPositionEntity.id);
