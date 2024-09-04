@@ -6,7 +6,7 @@
         "prettier": "prettier",
         "graph": "graph",
         "subgraphgen": "./codegen.sh",
-        "alchemy:base-3": "graph deploy perps-base-3 subgraph.base-3.yaml --output-dir ./build/base3 --version-label v3 --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key $SATSUMA_KEY --ipfs https://ipfs.satsuma.xyz",
+        "alchemy:base-3": "graph deploy perps-base-3 subgraph.base-3.yaml --output-dir ./build/base3 --version-label v33 --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key $SATSUMA_KEY --ipfs https://ipfs.satsuma.xyz",
         "alchemy:base-3-sepolia": "graph deploy base-3-sepolia subgraph.base-3-sepolia.yaml --output-dir ./build/base3-sepolia --version-label v1 --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key $SATSUMA_KEY --ipfs https://ipfs.satsuma.xyz",
         "test": "graph test",
         "coverage": "npm run deployments:optimism-goerli && npm run codegen:optimism-goerli && git diff --exit-code && npm test --coverage",

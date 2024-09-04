@@ -1,5 +1,5 @@
 {
-  "address": "0x5f674A0bbE38Dad270549b26d314017Cf2F68449",
+  "address": "0xB2505D6EA571639C9902ecCa70A1f93a0D321e39",
   "abi": [
     {
       "inputs": [
@@ -387,12 +387,12 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x34cceb84b543cb8bd41ed7f433184618d9bb25311fdd739467070231ea31a0d9",
-  "deployTxnBlockNumber": "17466815",
-  "deployTimestamp": "1721722977",
+  "deployTxnHash": "0xf1dc0a0da4103ddecacbd7de516046682d9b031497ba9785641ae6bc75cc464d",
+  "deployTxnBlockNumber": "19119881",
+  "deployTimestamp": "1725029109",
   "sourceName": "contracts/modules/NodeModule.sol",
   "contractName": "NodeModule",
   "deployedOn": "contract.NodeModule",
   "gasUsed": 4106509,
-  "gasCost": "17232170"
+  "gasCost": "14134099"
 }

@@ -63,7 +63,9 @@ type Trade @entity {
   account: Account!
   market: Market!
   fillPrice: BigInt!
+  averageEntryPrice: BigInt!
   pnl: BigInt!
+  realizedPnl: BigInt!
   accruedFunding: BigInt!
   sizeDelta: BigInt!
   newSize: BigInt!
@@ -78,7 +80,7 @@ type Trade @entity {
   block: BigInt!
   timestamp: BigInt!
   transactionHash: Bytes!
-  interestCharged: BigInt
+  interestCharged: BigInt!
   tradeType: ActionType!
 }
 
@@ -111,6 +113,8 @@ type Position @entity {
   size: BigInt!
   notionalAmount: BigInt!
   realizedPnl: BigInt!
+  realizedPnlWithFees: BigInt!
+  positionPnl: BigInt!
   totalFees: BigInt!
   totalVolume: BigInt!
   totalTrades: BigInt!
@@ -125,6 +129,16 @@ type Position @entity {
 type OpenPosition @entity {
   id: ID!
   position: Position!
+}
+
+type PositionReference @entity {
+  id: ID!
+  accountId: BigInt!
+  marketId: BigInt!
+  positionId: String!
+  tradeId: String!
+  transactionHash: Bytes!
+  block: BigInt!
 }
 
 enum LiquidationType {
